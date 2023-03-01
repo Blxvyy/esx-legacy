@@ -389,7 +389,7 @@ CREATE TABLE `users` (
   `job` varchar(20) DEFAULT 'unemployed',
   `job_grade` int(11) DEFAULT 0,
   `loadout` longtext DEFAULT NULL,
-  `position` varchar(255) DEFAULT '{"x":-269.4,"y":-955.3,"z":31.2,"heading":205.8}',
+  `position` longtext NULL DEFAULT NULL,
   `firstname` varchar(16) DEFAULT NULL,
   `lastname` varchar(16) DEFAULT NULL,
   `dateofbirth` varchar(10) DEFAULT NULL,
@@ -402,7 +402,8 @@ CREATE TABLE `users` (
   `disabled` TINYINT(1) NULL DEFAULT '0',
   `last_property` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `last_seen` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
+  `last_seen` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `phone_number` VARCHAR(20) DEFAULT NULL
 ) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
@@ -907,25 +908,7 @@ ALTER TABLE `users`
 --
 ALTER TABLE `user_licenses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- ESX Phone
---
-CREATE TABLE `user_contacts` (
-	`id` INT(11) NOT NULL AUTO_INCREMENT,
-	`identifier` VARCHAR(60) NOT NULL,
-	`name` VARCHAR(100) NOT NULL,
-	`number` INT(11) NOT NULL,
-
-	PRIMARY KEY (`id`),
-	INDEX `index_user_contacts_identifier_name_number` (`identifier`, `name`, `number`)
-) ENGINE=InnoDB;
-
-
-ALTER TABLE `users`
-	ADD COLUMN `phone_number` INT(11) NULL,
-	ADD UNIQUE INDEX `index_users_phone_number` (`phone_number`);
-
+  
 --
 -- Fine Types
 --
@@ -1029,4 +1012,3 @@ CREATE TABLE IF NOT EXISTS `banking` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 ALTER TABLE `users` ADD COLUMN `pincode` INT NULL;
-
